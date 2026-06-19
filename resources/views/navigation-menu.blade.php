@@ -15,6 +15,9 @@
                     <x-nav-link href="{{ route('dashboard') }}" :active="request()->routeIs('dashboard')">
                         Inicio
                     </x-nav-link>
+                    <x-nav-link href="{{ route('items.index') }}" :active="request()->routeIs('items.index') || request()->routeIs('items.create') || request()->routeIs('items.edit')">
+                        Inventario
+                    </x-nav-link>
                     <x-nav-link href="{{ route('items.cooked') }}" :active="request()->routeIs('items.cooked')">
                         Cocinado
                     </x-nav-link>
@@ -22,7 +25,7 @@
                         Sin preparar
                     </x-nav-link>
                     <x-nav-link href="{{ route('items.general') }}" :active="request()->routeIs('items.general')">
-                        Articulos
+                        Generales
                     </x-nav-link>
                     <x-nav-link href="{{ route('shopping-list.index') }}" :active="request()->routeIs('shopping-list.*')">
                         Compras
@@ -154,6 +157,9 @@
             <x-responsive-nav-link href="{{ route('dashboard') }}" :active="request()->routeIs('dashboard')">
                 Inicio
             </x-responsive-nav-link>
+            <x-responsive-nav-link href="{{ route('items.index') }}" :active="request()->routeIs('items.index') || request()->routeIs('items.create') || request()->routeIs('items.edit')">
+                Inventario general
+            </x-responsive-nav-link>
             <x-responsive-nav-link href="{{ route('items.cooked') }}" :active="request()->routeIs('items.cooked')">
                 Cocinado
             </x-responsive-nav-link>
@@ -161,7 +167,7 @@
                 Alimentos sin preparar
             </x-responsive-nav-link>
             <x-responsive-nav-link href="{{ route('items.general') }}" :active="request()->routeIs('items.general')">
-                Articulos
+                Articulos generales
             </x-responsive-nav-link>
             <x-responsive-nav-link href="{{ route('shopping-list.index') }}" :active="request()->routeIs('shopping-list.*')">
                 Lista de compras

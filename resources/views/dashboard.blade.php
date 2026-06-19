@@ -33,10 +33,11 @@
                     @endforeach
                 </div>
 
-                <div class="mt-6 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+                <div class="mt-6 grid gap-3 sm:grid-cols-2 lg:grid-cols-5">
+                    <a href="{{ route('items.index') }}" class="flex min-h-16 items-center justify-center rounded-md border border-gray-200 bg-white px-4 py-3 text-sm font-semibold text-gray-800 shadow-sm hover:bg-gray-50">Inventario general</a>
                     <a href="{{ route('items.cooked') }}" class="flex min-h-16 items-center justify-center rounded-md border border-gray-200 bg-white px-4 py-3 text-sm font-semibold text-gray-800 shadow-sm hover:bg-gray-50">Cocinado</a>
                     <a href="{{ route('items.unprepared') }}" class="flex min-h-16 items-center justify-center rounded-md border border-gray-200 bg-white px-4 py-3 text-sm font-semibold text-gray-800 shadow-sm hover:bg-gray-50">Sin preparar</a>
-                    <a href="{{ route('items.general') }}" class="flex min-h-16 items-center justify-center rounded-md border border-gray-200 bg-white px-4 py-3 text-sm font-semibold text-gray-800 shadow-sm hover:bg-gray-50">Articulos</a>
+                    <a href="{{ route('items.general') }}" class="flex min-h-16 items-center justify-center rounded-md border border-gray-200 bg-white px-4 py-3 text-sm font-semibold text-gray-800 shadow-sm hover:bg-gray-50">Generales</a>
                     <a href="{{ route('shopping-list.index') }}" class="flex min-h-16 items-center justify-center rounded-md border border-gray-200 bg-white px-4 py-3 text-sm font-semibold text-gray-800 shadow-sm hover:bg-gray-50">Lista de compras</a>
                 </div>
             </div>
