@@ -19,7 +19,72 @@
                 </a>
             </div>
 
-            <div class="mt-6 overflow-hidden rounded-md border border-gray-200 bg-white shadow-sm">
+            <form method="GET" action="{{ url()->current() }}" class="mt-6 rounded-md border border-gray-200 bg-white p-4 shadow-sm">
+                <div class="grid gap-3 lg:grid-cols-6">
+                    <div class="lg:col-span-2">
+                        <x-label for="buscar" value="Buscar" />
+                        <x-input id="buscar" name="buscar" type="search" class="mt-1 block min-h-12 w-full" value="{{ request('buscar') }}" placeholder="Nombre del articulo" />
+                    </div>
+
+                    @unless ($type)
+                        <div>
+                            <x-label for="tipo" value="Tipo" />
+                            <select id="tipo" name="tipo" class="mt-1 block min-h-12 w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
+                                <option value="">Todos</option>
+                                @foreach ($types as $value => $label)
+                                    <option value="{{ $value }}" @selected(request('tipo') === $value)>{{ $label }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                    @endunless
+
+                    <div>
+                        <x-label for="categoria" value="Categoria" />
+                        <select id="categoria" name="categoria" class="mt-1 block min-h-12 w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
+                            <option value="">Todas</option>
+                            @foreach ($categories as $value => $label)
+                                <option value="{{ $value }}" @selected(request('categoria') === $value)>{{ $label }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+
+                    <div>
+                        <x-label for="ubicacion" value="Ubicacion" />
+                        <select id="ubicacion" name="ubicacion" class="mt-1 block min-h-12 w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
+                            <option value="">Todas</option>
+                            @foreach ($locations as $value => $label)
+                                <option value="{{ $value }}" @selected(request('ubicacion') === $value)>{{ $label }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+
+                    <div>
+                        <x-label for="estado" value="Estado" />
+                        <select id="estado" name="estado" class="mt-1 block min-h-12 w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
+                            <option value="">Todos</option>
+                            @foreach ($statuses as $value => $label)
+                                <option value="{{ $value }}" @selected(request('estado') === $value)>{{ $label }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+
+                    <div>
+                        <x-label for="faltante" value="Faltante" />
+                        <select id="faltante" name="faltante" class="mt-1 block min-h-12 w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
+                            <option value="">Todos</option>
+                            <option value="1" @selected(request('faltante') === '1')>Si</option>
+                            <option value="0" @selected(request('faltante') === '0')>No</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="mt-4 flex flex-col gap-3 sm:flex-row sm:justify-end">
+                    <a href="{{ url()->current() }}" class="inline-flex min-h-12 items-center justify-center rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-semibold text-gray-700 shadow-sm hover:bg-gray-50">Limpiar</a>
+                    <button type="submit" class="inline-flex min-h-12 items-center justify-center rounded-md bg-gray-900 px-5 py-3 text-sm font-semibold text-white shadow-sm hover:bg-gray-700">Aplicar filtros</button>
+                </div>
+            </form>
+
+            <div class="mt-4 overflow-hidden rounded-md border border-gray-200 bg-white shadow-sm">
                 @forelse ($items as $item)
                     <div class="border-b border-gray-100 p-4 last:border-b-0 sm:grid sm:grid-cols-12 sm:items-center sm:gap-4">
                         <div class="sm:col-span-4">

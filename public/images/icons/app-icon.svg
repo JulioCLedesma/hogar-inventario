@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-label="Hogar Inventario">
+    <rect width="512" height="512" rx="112" fill="#064e3b"/>
+    <path d="M136 232 256 132l120 100v148a28 28 0 0 1-28 28H164a28 28 0 0 1-28-28V232Z" fill="#f9fafb"/>
+    <path d="M106 244 256 118l150 126" fill="none" stroke="#34d399" stroke-width="34" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M184 252h118M184 304h92M184 356h52" stroke="#064e3b" stroke-width="24" stroke-linecap="round"/>
+    <path d="m292 348 35 34 72-86" fill="none" stroke="#f59e0b" stroke-width="30" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>

@@ -93,13 +93,22 @@ class ItemController extends Controller
 
     private function list(Request $request, ?string $type, string $title, string $description): View
     {
+        $search = trim((string) $request->query('buscar', ''));
+
         $query = $request->user()->currentTeam->items()
             ->when($type, fn ($query) => $query->where('tipo', $type))
-            ->orderByDesc('faltante')
+            ->when(! $type && $request->filled('tipo'), fn ($query) => $query->where('tipo', $request->query('tipo')))
+            ->when($request->filled('categoria'), fn ($query) => $query->where('categoria', $request->query('categoria')))
+            ->when($request->filled('ubicacion'), fn ($query) => $query->where('ubicacion', $request->query('ubicacion')))
+            ->when($request->filled('estado'), fn ($query) => $query->where('estado', $request->query('estado')))
+            ->when($request->filled('faltante'), fn ($query) => $query->where('faltante', $request->boolean('faltante')))
+            ->when($search !== '', function ($query) use ($search) {
+                $query->where('nombre', 'like', '%'.addcslashes($search, '%_\\').'%');
+            })
             ->orderBy('nombre');
 
         return view('items.index', [
-            'items' => $query->paginate(20)->withQueryString(),
+            'items' => $query->paginate(10)->withQueryString(),
             'title' => $title,
             'description' => $description,
             'type' => $type,

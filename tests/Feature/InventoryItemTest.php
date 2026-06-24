@@ -14,6 +14,7 @@ class InventoryItemTest extends TestCase
     public function test_items_are_created_for_the_current_team_and_flow_to_shopping_list(): void
     {
         $user = User::factory()->withPersonalTeam()->create();
+        $user->switchTeam($user->ownedTeams()->first());
 
         $this->actingAs($user)
             ->post(route('items.store'), [
@@ -48,6 +49,8 @@ class InventoryItemTest extends TestCase
     {
         $owner = User::factory()->withPersonalTeam()->create();
         $otherUser = User::factory()->withPersonalTeam()->create();
+        $owner->switchTeam($owner->ownedTeams()->first());
+        $otherUser->switchTeam($otherUser->ownedTeams()->first());
 
         $item = $owner->currentTeam->items()->create([
             'nombre' => 'Cafe',
@@ -68,5 +71,40 @@ class InventoryItemTest extends TestCase
             ->assertNotFound();
 
         $this->assertSame('Cafe', $item->fresh()->nombre);
+    }
+
+    public function test_inventory_is_paginated_alphabetical_and_filterable(): void
+    {
+        $user = User::factory()->withPersonalTeam()->create();
+        $user->switchTeam($user->ownedTeams()->first());
+
+        foreach (['Zanahoria', 'Arroz', 'Cafe', 'Detergente', 'Huevo', 'Leche', 'Manzana', 'Pan', 'Queso', 'Shampoo', 'Yogurt'] as $name) {
+            $user->currentTeam->items()->create([
+                'nombre' => $name,
+                'tipo' => $name === 'Detergente' ? 'articulo_general' : 'sin_preparar',
+                'categoria' => $name === 'Detergente' ? 'limpieza' : 'alimento',
+                'ubicacion' => 'alacena',
+                'estado' => 'disponible',
+            ]);
+        }
+
+        $this->actingAs($user)
+            ->get(route('items.index'))
+            ->assertOk()
+            ->assertSeeInOrder(['Arroz', 'Cafe', 'Detergente'])
+            ->assertSee('Shampoo')
+            ->assertDontSee('Zanahoria');
+
+        $this->actingAs($user)
+            ->get(route('items.index', ['buscar' => 'arro']))
+            ->assertOk()
+            ->assertSee('Arroz')
+            ->assertDontSee('Cafe');
+
+        $this->actingAs($user)
+            ->get(route('items.index', ['categoria' => 'limpieza']))
+            ->assertOk()
+            ->assertSee('Detergente')
+            ->assertDontSee('Arroz');
     }
 }
